@@ -14,7 +14,16 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+  raise TriangleError.new("Invalid triangle") unless (a < (b+c) and b < (a+c) and c < (a+b))
+  raise TriangleError.new("Invalid lengths") unless (a>0 and b>0 and c>0)
+
+  if a==b && b==c
+    :equilateral
+  elsif (a==b) or (b==c) or (c==a)
+    :isosceles
+  else
+    :scalene
+  end
 end
 
 # Error class used in part 2.  No need to change this code.
