@@ -6,6 +6,22 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 #   code ...
 # end
 
+class DiceSet
+  attr_accessor :values
+
+  def initialize
+    @values = Array.new
+  end
+
+  def roll(count)
+    # let old references to values retain old state
+    # otherwise koan guys should clone, which is what
+    # I can't control right now
+    @values = Array.new
+    count.times { @values << Random.rand(6) + 1 }
+  end
+end
+
 class AboutDiceProject < EdgeCase::Koan
   def test_can_create_a_dice_set
     dice = DiceSet.new
@@ -48,6 +64,10 @@ class AboutDiceProject < EdgeCase::Koan
     # If the rolls are random, then it is possible (although not
     # likely) that two consecutive rolls are equal.  What would be a
     # better way to test this.
+    #
+    # yeah there is some minute probability that consecutive rolls be equal
+    # we could compare object ids to figure out if the roll gave us a freshly
+    # prepared set of values
   end
 
   def test_you_can_roll_different_numbers_of_dice
